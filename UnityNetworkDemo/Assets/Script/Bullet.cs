@@ -17,7 +17,6 @@ public class Bullet : NetworkBehaviour {
 			Mathf.Sin ((angle.y) * 3.14f / 180) * speed,
 			-(Mathf.Tan ((angle.x) * 3.14f / 180) * speed),
 			Mathf.Cos ((angle.y) * 3.14f / 180) * speed);
-		Destroy (this.gameObject, 3.0f);
 	}
 	
 	// Update is called once per frame
