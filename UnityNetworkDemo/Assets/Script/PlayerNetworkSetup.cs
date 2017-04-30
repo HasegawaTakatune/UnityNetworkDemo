@@ -15,7 +15,7 @@ public class PlayerNetworkSetup : NetworkBehaviour {
 		if (isLocalPlayer) {
 			// SceneCameraを非アクティブ化
 			GameObject.Find ("SceneCamera").SetActive (false);
-			GetComponent<CharacterController> ().enabled = true;
+			//GetComponent<CharacterController> ().enabled = true;
 			// FirstPersonControllerをアクティブ化
 			GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController> ().enabled = true;
 			// FirstPersonCharacterの各コンポーネントをおアクティブ化
