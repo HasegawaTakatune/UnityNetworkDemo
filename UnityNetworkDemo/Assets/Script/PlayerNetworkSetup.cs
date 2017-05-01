@@ -18,7 +18,7 @@ public class PlayerNetworkSetup : NetworkBehaviour {
 			//GetComponent<CharacterController> ().enabled = true;
 			// FirstPersonControllerをアクティブ化
 			GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController> ().enabled = true;
-			// FirstPersonCharacterの各コンポーネントをおアクティブ化
+			// FirstPersonCharacterの各コンポーネントをアクティブ化
 			FPSCharacterCamera.enabled = true;
 			audioListener.enabled = true;
 		}
