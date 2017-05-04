@@ -28,10 +28,9 @@ public class PlayerShooting : NetworkBehaviour {
 
 	void CheckIfShooting(){
 		if (!isLocalPlayer) {
-		
 			return;
 		}
-		if (Input.GetKeyDown (KeyCode.Mouse0)) {
+		if (Input.GetMouseButtonDown(0)) {
 			Shooting ();
 		}
 	}

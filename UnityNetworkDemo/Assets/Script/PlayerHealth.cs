@@ -21,6 +21,10 @@ public class PlayerHealth : NetworkBehaviour {
 	public delegate void DieDelegate();
 	public event DieDelegate EventDie;
 
+	// Player再生成のためのイベント
+	public delegate void RespawnDelegate();
+	public event RespawnDelegate EventRespawn;
+
 	// Use this for initialization
 	void Start () {
 		// Textオブジェクトをキャッシュ
@@ -48,6 +52,16 @@ public class PlayerHealth : NetworkBehaviour {
 			}
 			shouldDie = false;
 		}
+
+		// HPが1以上あるのにisDead = trueの時
+		if (health > 0 && isDead) {
+			// EventRespawnに何か登録されている時
+			if (EventRespawn != null) {
+				// EventRespawn実行
+				EventRespawn ();
+			}
+			isDead = false;
+		}
 	}
 
 	void SetHealthText(){
@@ -71,6 +85,11 @@ public class PlayerHealth : NetworkBehaviour {
 		health = hlth;
 		// HPの表示を変更
 		SetHealthText();
+	}
+
+	public void ResetHealth(){
+		// PlayerRespawnスクリプトのCmdRespawnOnServerメソッドが[Command]のためSyncVarが機能する
+		health = 100;
 	}
 
 }
