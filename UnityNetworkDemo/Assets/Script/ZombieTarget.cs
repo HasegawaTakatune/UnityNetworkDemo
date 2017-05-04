@@ -7,7 +7,7 @@ public class ZombieTarget : NetworkBehaviour {
 
 	private UnityEngine.AI.NavMeshAgent agent;
 	private Transform myTransform;
-	private Transform targetTransform;
+	public Transform targetTransform;
 	// ゾンビが探知するレイヤー
 	private LayerMask raycastLayer;
 	// ゾンビがPlayerを探知する半径
@@ -18,14 +18,13 @@ public class ZombieTarget : NetworkBehaviour {
 		agent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
 		myTransform = transform;
 		raycastLayer = 1 << LayerMask.NameToLayer ("Player");
-	}
 
-	// Update is called once per frame
-	void FixedUpdate(){
-		SearchForTarget ();
-		MoveForTarget ();
+		// コルーチンの実行
+		if(isServer){
+			StartCoroutine ("DoCheck");
+		}
 	}
-
+		
 	void SearchForTarget(){
 		// サーバーじゃなければメソッド終了
 		if(!isServer){
@@ -59,4 +58,14 @@ public class ZombieTarget : NetworkBehaviour {
 		// ゾンビAIの目的地設定
 		agent.SetDestination(dest.position);
 	}
+
+	IEnumerator DoCheck(){
+		// 無限ループ
+		for (;;) {
+			SearchForTarget ();
+			MoveForTarget ();
+			yield return new WaitForSeconds (0.2f);
+		}
+	}
+
 }

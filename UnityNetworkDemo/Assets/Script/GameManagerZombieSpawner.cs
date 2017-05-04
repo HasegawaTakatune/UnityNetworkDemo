@@ -20,19 +20,11 @@ public class GameManagerZombieSpawner : NetworkBehaviour {
 	}
 
 	void SpawnZombies(){
-		// counter
+		counter++;
 
 		GameObject go = GameObject.Instantiate (zombiePrefab, zombieSpawn.transform.position, Quaternion.identity)as GameObject;
 		NetworkServer.Spawn (go);
-	}
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+		// ZombieにIDを付けていく
+		go.GetComponent<ZombieID>().zombieID="Zombie" + counter;
 	}
 }

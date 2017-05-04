@@ -51,10 +51,6 @@ public class PlayerSyncRotation : NetworkBehaviour {
 	// 5unitを超えなければ移動していない事とする
 	private float threshold = 5;*/
 
-	// Use this for initialization
-	void Start () {
-		
-	}
 
 	void Update(){
 		// 処理強制移行

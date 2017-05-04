@@ -22,11 +22,6 @@ public class PlayerID : NetworkBehaviour {
 		// 自分の名前を取得する時に使う
 		myTransform = transform;
 	}
-
-	// Use this for initialization
-	void Start () {
-		
-	}
 	
 	// Update is called once per frame
 	void Update () {

@@ -35,11 +35,6 @@ public class PlayerRespawn : NetworkBehaviour {
 		}
 	}
 
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
 	// PlayerDeathスクリプトのDisablePlayerメソッドのfalseをtrueに変えたイメージ
 	// (health > 0 && isDead)の時に実行される
 	void EnablePlayer(){
