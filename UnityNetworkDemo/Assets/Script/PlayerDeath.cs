@@ -12,7 +12,7 @@ public class PlayerDeath : NetworkBehaviour {
 	private Image crossHairImage;
 
 	// Use this for initialization
-	void Start () {
+	public override void PreStartClient () {
 		// キャッシュしておく
 		crossHairImage = GameObject.Find("Crosshair Image").GetComponent<Image>();
 		healthScript = GetComponent<PlayerHealth> ();
@@ -22,7 +22,7 @@ public class PlayerDeath : NetworkBehaviour {
 
 	// メモリーリークした時用の、安全のためのメソッド
 	// OnDisable: 消滅する時に呼ばれる
-	void OnDisable(){
+	public override void OnNetworkDestroy(){
 		// EventからDisablePlayerメソッドを削除
 		healthScript.EventDie -= DisablePlayer;
 	}

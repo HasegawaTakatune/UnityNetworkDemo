@@ -14,13 +14,15 @@ public class PlayerRespawn : NetworkBehaviour {
 	private GameObject respawnButton;
 
 	// Use this for initialization
-	void Start () {
+	public override void PreStartClient () {
 		// PlayerHealthスクリプトおキャッシュ
-		healthScript = GetComponent<PlayerHealth>();
+		healthScript = GetComponent<PlayerHealth> ();
 		// eventを登録
 		healthScript.EventRespawn += EnablePlayer;
+	}
+	public override void OnStartLocalPlayer(){
 		//照準画面をキャッシュ
-		crossHairImage=GameObject.Find("Crosshair Image").GetComponent<Image>();
+		crossHairImage = GameObject.Find ("Crosshair Image").GetComponent<Image> ();
 		SetRespawnButton ();
 	}
 
@@ -33,6 +35,10 @@ public class PlayerRespawn : NetworkBehaviour {
 			// ボタンを消す
 			respawnButton.SetActive(false);
 		}
+	}
+
+	public override void OnNetworkDestroy(){
+		healthScript.EventRespawn -= EnablePlayer;
 	}
 
 	// PlayerDeathスクリプトのDisablePlayerメソッドのfalseをtrueに変えたイメージ

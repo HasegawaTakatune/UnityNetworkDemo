@@ -31,13 +31,13 @@ public class PlayerSyncPosition : NetworkBehaviour {
 	// 0.5unitを超えなければ移動していない事とする
 	private float threshold = 0.5f;
 
-	private NetworkClient networkClient;
+	//private NetworkClient networkClient;
 
 	// 遅延時間
-	private int latency;
+	//private int latency;
 
 	// 遅延時間表示用テキスト
-	private Text latencyText;
+	//private Text latencyText;
 
 	// Position同期用のList
 	private List<Vector3> syncPositionList = new List<Vector3>();
@@ -49,10 +49,10 @@ public class PlayerSyncPosition : NetworkBehaviour {
 	// 2点間の距離を判定する時に使う
 	private float closeEnough = 0.1f;
 
-	void Start(){
+	public override void OnStartLocalPlayer(){
 		// NetworkClientとTextをキャッシュする
-		networkClient = GameObject.Find("NetworkManager").GetComponent<NetworkManager>().client;
-		latencyText = GameObject.Find ("Latency Text").GetComponent<Text> ();
+		//networkClient = GameObject.Find("NetworkManager").GetComponent<NetworkManager>().client;
+		//latencyText = GameObject.Find ("Latency Text").GetComponent<Text> ();
 		lerpRate = normalLerpRate;
 	}
 
@@ -63,7 +63,7 @@ public class PlayerSyncPosition : NetworkBehaviour {
 		// 2点間を補足する
 		LerpPosition ();
 
-		ShowLatency ();
+		//ShowLatency ();
 	}
 
 	void FixedUpdate(){
@@ -116,14 +116,14 @@ public class PlayerSyncPosition : NetworkBehaviour {
 	}
 
 	// 通信遅延の表示
-	void ShowLatency(){
+	/*void ShowLatency(){
 		if (isLocalPlayer) {
 			// latencyを取得
 			latency = networkClient.GetRTT();
 			//latencyを表示
 			latencyText.text = latency.ToString();
 		}
-	}
+	}*/
 
 	// 通常使われる補間メソッド
 	void OrdinaryLerping(){
