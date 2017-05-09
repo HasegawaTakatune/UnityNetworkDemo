@@ -20,5 +20,17 @@ public class PlayerNetworkSetup : NetworkBehaviour {
 		// FirstPersonCharacterの各コンポーネントをアクティブ化
 		FPSCharacterCamera.enabled = true;
 		audioListener.enabled = true;
+		// LocalPlayerのRendererｗｐ非表示にする
+		Renderer[] rens = GetComponentsInChildren<Renderer>();
+		foreach (Renderer ren in rens) {
+			ren.enabled = false;
+		}
+		// LocalPlayerのAnimatorパラメータを自動的に送る
+		GetComponent<NetworkAnimator>().SetParameterAutoSend(0,true);
+	}
+
+	public override void PreStartClient(){
+		// ClientのAnimatorパラメータを自動的に送る
+		GetComponent<NetworkAnimator>().SetParameterAutoSend(0,true);
 	}
 }

@@ -207,6 +207,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
             float horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
             float vertical = CrossPlatformInputManager.GetAxis("Vertical");
 
+			// Added UNET tutorial
+			// 上下入力の絶対値を取得
+			float animSpeed = Mathf.Abs(vertical);
+			// 取得した絶対値をAnimatorControllerのSpeed変数にセット
+			GetComponent<Animator>().SetFloat("Speed",animSpeed);
+
             bool waswalking = m_IsWalking;
 
 #if !MOBILE_INPUT
