@@ -37,7 +37,7 @@ public class ZombieMotionSync : NetworkBehaviour {
 	}
 
 	void TransmitMotion(){
-		if (isServer)
+		if (!isServer)
 			return;
 
 		// Transform情報が１つ前と比べてThreshold（しきい値）より大きい時

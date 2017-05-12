@@ -5,4 +5,5 @@ using UnityEngine;
 public class GameManagerReferences : MonoBehaviour {
 
 	public GameObject respawnButton;
+	public GameObject DamageUI;
 }

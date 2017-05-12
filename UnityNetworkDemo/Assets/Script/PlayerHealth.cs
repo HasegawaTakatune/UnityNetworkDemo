@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using System;
 
 public class PlayerHealth : NetworkBehaviour {
 
@@ -77,6 +78,8 @@ public class PlayerHealth : NetworkBehaviour {
 	// hookが作動するらしい *1
 	public void DeductHealth(int dmg){
 		health -= dmg;
+		// ダメージUI処理
+		DamageUI ();
 	}
 
 	// health変数に更新があると実行 *1
@@ -90,6 +93,21 @@ public class PlayerHealth : NetworkBehaviour {
 	public void ResetHealth(){
 		// PlayerRespawnスクリプトのCmdRespawnOnServerメソッドが[Command]のためSyncVarが機能する
 		health = 100;
+	}
+
+	public void DamageUI(){
+		GameObject obj = GameObject.Find ("GameManager").GetComponent<GameManagerReferences>().DamageUI;
+		obj.SetActive (true);
+		StartCoroutine (Delay (0.1f, () => {
+			obj.SetActive (false);
+		}));
+	}
+
+	// 遅延処理
+	IEnumerator Delay(float waitTime,Action action){
+		yield return new WaitForSeconds (waitTime);
+		action ();
+		yield break;
 	}
 
 }
