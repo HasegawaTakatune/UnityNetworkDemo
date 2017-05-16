@@ -47,7 +47,6 @@ public class ZombieAttack : NetworkBehaviour {
 			if(currentDistance < minDistance && Time.time > nextAttack){
 				// nextAttackに3秒足す
 				nextAttack = Time.time + attackRate;
-
 				// Playerにダメージを与える
 				targetScript.targetTransform.GetComponent<PlayerHealth>().DeductHealth(damage);
 				// ホストサーバー向け

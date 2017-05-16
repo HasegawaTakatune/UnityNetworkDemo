@@ -15,6 +15,7 @@ public class ZombieHealth : NetworkBehaviour {
 	void CheckHealth(){
 		if (health < 0) {
 			Destroy (gameObject);
+			SpawnManagerZombieSpawner.ZombiesAreDecreasing ();
 		}
 	}
 

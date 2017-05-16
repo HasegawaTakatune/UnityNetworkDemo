@@ -78,8 +78,6 @@ public class PlayerHealth : NetworkBehaviour {
 	// hookが作動するらしい *1
 	public void DeductHealth(int dmg){
 		health -= dmg;
-		// ダメージUI処理
-		DamageUI ();
 	}
 
 	// health変数に更新があると実行 *1
@@ -88,6 +86,10 @@ public class PlayerHealth : NetworkBehaviour {
 		health = hlth;
 		// HPの表示を変更
 		SetHealthText();
+		if (isLocalPlayer) {
+			// ダメージUI処理
+			DamageUI ();
+		}
 	}
 
 	public void ResetHealth(){

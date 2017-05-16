@@ -11,13 +11,15 @@ public class SpawnManagerZombieSpawner : NetworkBehaviour {
 	private GameObject[] zombieSpawns;
 
 	private int counter;
-	private int numberOfZombies = 10;
+	private int numberOfZombies = 5;
 	// ゾンビの最大数
-	private int maxNumberOfZombies = 80;
+	private int maxNumberOfZombies = 0;
 	// ゾンビが出現する間隔（秒）
 	private float waveRate = 10;
 	// 出現フラグ
 	private bool isSpawnActivated = true;
+	// 現在のゾンビ数
+	private static byte nowNumberOfZombies = 0;
 
 
 	public override void OnStartServer(){
@@ -32,9 +34,9 @@ public class SpawnManagerZombieSpawner : NetworkBehaviour {
 		for(;;){
 			yield return new WaitForSeconds (waveRate);
 			// ゲーム上の全ゾンビ取得
-			GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
+			//GameObject[] zombies = new GameObject[0];// = GameObject.FindGameObjectsWithTag("Zombie");
 			// ゾンビの数が最大値より少なかったらメソッド実行
-			if(zombies.Length < maxNumberOfZombies){
+			if(nowNumberOfZombies < maxNumberOfZombies){
 				CommenceSpawn ();
 			}
 		}
@@ -52,11 +54,15 @@ public class SpawnManagerZombieSpawner : NetworkBehaviour {
 
 	void SpawnZombies(Vector3 spawnPos){
 		counter++;
-
+		nowNumberOfZombies++;
 		GameObject go = GameObject.Instantiate (zombiePrefab, spawnPos, Quaternion.identity)as GameObject;
-		//NetworkServer.Spawn (go);
 		// ZombieにIDを付けていく
 		go.GetComponent<ZombieID>().zombieID="Zombie" + counter;
 		NetworkServer.Spawn (go);
+	}
+
+	// 現在のZombie数減少
+	public static void ZombiesAreDecreasing(){
+		nowNumberOfZombies--;
 	}
 }
