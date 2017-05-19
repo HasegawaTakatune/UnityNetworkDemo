@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Zombie
   - ZombieSpawn
+  - Floor
   layers:
   - Default
   - TransparentFX

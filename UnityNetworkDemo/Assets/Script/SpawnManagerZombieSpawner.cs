@@ -13,7 +13,7 @@ public class SpawnManagerZombieSpawner : NetworkBehaviour {
 	private int counter;
 	private int numberOfZombies = 5;
 	// ゾンビの最大数
-	private int maxNumberOfZombies = 0;
+	private int maxNumberOfZombies = 5;
 	// ゾンビが出現する間隔（秒）
 	private float waveRate = 10;
 	// 出現フラグ

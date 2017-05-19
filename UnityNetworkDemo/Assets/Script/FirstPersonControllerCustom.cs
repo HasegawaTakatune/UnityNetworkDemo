@@ -7,15 +7,18 @@ namespace UnityStandardAssets.Characters.FirstPerson{
 	public class FirstPersonControllerCustom : FirstPersonControllerSandbox {
 		// プレイヤのカメラ取得
 		[SerializeField]
-		Camera FPSCharacterCamera;
+		private Camera FPSCharacterCamera;
 		// ジェット速度
 		private float jetSpeed = 5;
 		// 実行制限
-		bool DoOnceJet = false;
+		private bool DoOnceJet = false;
 		// 角度
-		float angle;
+		private float angle;
 		// 移動結果
-		Vector3 movementValue = Vector3.zero;
+		private Vector3 movementValue = Vector3.zero;
+		// 衝突判定
+		private bool conflicted = false;
+
 
 	// Use this for initialization
 		void Start () {
@@ -31,8 +34,10 @@ namespace UnityStandardAssets.Characters.FirstPerson{
 
 		// ジェット動作
 		void UseJetFlight(){
+			// 初期化
 			float horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
 			float vertical = CrossPlatformInputManager.GetAxis("Vertical");
+			// キーステータス
 			int KeyStatus = 0;
 			// キー判定
 			KeyStatus += (horizontal > 0) ? MyKeyCode.RIGHT : (horizontal < 0) ? MyKeyCode.LEFT : MyKeyCode.WAIT;
@@ -40,22 +45,25 @@ namespace UnityStandardAssets.Characters.FirstPerson{
 			// 移動量保存
 			AmountOfMovement (KeyStatus);
 			// 速度初期化
-			jetSpeed = 0.5f;
+			jetSpeed = 0.7f;
 		}
 		// ジェットキー
 		void JetFlightKey(){
+			// ジェット移動の準備
 			if (base.m_Jumping && !DoOnceJet) {
 				if (CrossPlatformInputManager.GetButtonDown ("Jump")) {
 					UseJetFlight ();
 					DoOnceJet = true;
 				}
 			}
+			// ジェット移動使用後処理
 			if (jetSpeed != 0) {
 				transform.position += movementValue * jetSpeed;
-				jetSpeed -= Time.deltaTime;
-				if (jetSpeed <= 0.1f)
+				jetSpeed -= Time.deltaTime * 0.8f;
+				if (jetSpeed <= 0 || conflicted)
 					jetSpeed = 0;
 				DoOnceJet = false;
+				conflicted = false;
 			}
 		}
 
@@ -80,9 +88,15 @@ namespace UnityStandardAssets.Characters.FirstPerson{
 			if (Execution) {
 				movementValue = new Vector3 (
 					Mathf.Sin ((transform.localEulerAngles.y + angle) * 3.14f / 180),
-					-(Mathf.Tan ((FPSCharacterCamera.transform.localRotation.x)/* * 3.14f / 180*/)) * 4,
+					-(Mathf.Tan ((FPSCharacterCamera.transform.localRotation.x))) * 4,
 					Mathf.Cos ((transform.localEulerAngles.y + angle) * 3.14f / 180));
-				Debug.Log ("rotation = " + FPSCharacterCamera.transform.localEulerAngles);
+				Debug.Log ("rotation = " + FPSCharacterCamera.transform.localRotation);
+			}
+		}
+
+		void OnTriggerEnter(Collider other){
+			if (other.gameObject.tag == "Floor") {
+				conflicted = true;
 			}
 		}
 	}
